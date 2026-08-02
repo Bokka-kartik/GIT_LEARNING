@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -e
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+if echo "$commit_msg" | grep -Eq '^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert)(\([a-z0-9._-]+\))?: .+'; then
+  exit 0
+fi
+
+echo "Commit message must follow Conventional Commits format:"
+echo "  feat: add something"
+echo "  fix(auth): resolve issue"
+exit 1
