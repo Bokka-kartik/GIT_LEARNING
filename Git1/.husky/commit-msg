@@ -14,10 +14,10 @@ if [ -z "$username" ]; then
   exit 1
 fi
 
-if echo "$commit_msg" | grep -Eq "^${username}: .+"; then
+if echo "$commit_msg" | grep -Eq "^${username} .+"; then
   exit 0
 fi
 
 echo "Commit message must start with your username, like:"
-echo "  ${username}: added login page"
+echo "  ${username} added login page"
 exit 1
