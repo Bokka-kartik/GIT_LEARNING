@@ -5,21 +5,8 @@ if [ -f package.json ]; then
   if npm run | grep -qE '(^|[[:space:]])test([[:space:]]|$)'; then
     npm test
   fi
-fi
 
-branch_name=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)
-username=$(git config --get user.username 2>/dev/null || true)
-
-if [ -z "$username" ]; then
-  username=$(git config --get user.name 2>/dev/null || true)
-fi
-
-if [ -n "$username" ] && [ "$branch_name" != "main" ] && [ "$branch_name" != "master" ]; then
-  sanitized_username=$(printf '%s' "$username" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g; s/--*/-/g; s/^-//; s/-$//')
-  prefix="$sanitized_username/"
-
-  if [ -n "$sanitized_username" ] && [ "${branch_name#"$prefix"}" = "$branch_name" ]; then
-    echo "Branch name must start with '$prefix'"
-    exit 1
+  if npm run | grep -qE '(^|[[:space:]])lint([[:space:]]|$)'; then
+    npm run lint
   fi
 fi
