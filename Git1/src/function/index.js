@@ -1,0 +1,5 @@
+export { add } from './adding'
+export { subtract } from './subtracting'
+export { divide } from './dividing'
+export { multiply } from './multiplying'
+export { modulus } from './modulus'

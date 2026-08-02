@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { add } from './function/adding'
-import { subtract } from './function/subtracting'
-import { divide } from './function/dividing'
+import { add, subtract, divide, multiply, modulus } from './function'
 import { userSchema } from './graphql/schema'
 import { resolvers } from './graphql/reslover'
 import { apolloClient } from './graphql/apollo'
@@ -14,6 +12,8 @@ const App = () => {
   const sum = add(8, 5)
   const difference = subtract(12, 4)
   const quotient = divide(20, 4)
+  const product = multiply(6, 7)
+  const remainder = modulus(17, 5)
   const graphqlUser = resolvers.Query.user()
 
   return (
@@ -27,6 +27,8 @@ const App = () => {
           <p>Addition: {sum}</p>
           <p>Subtraction: {difference}</p>
           <p>Division: {quotient}</p>
+          <p>Multiplication: {product}</p>
+          <p>Modulus: {remainder}</p>
         </div>
 
         <div className="section">
