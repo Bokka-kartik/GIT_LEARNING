@@ -4,11 +4,20 @@ set -e
 commit_msg_file="$1"
 commit_msg=$(cat "$commit_msg_file")
 
-if echo "$commit_msg" | grep -Eq '^(feat|fix|docs|style|refactor|test|chore|perf|build|ci|revert)(\([a-z0-9._-]+\))?: .+'; then
+username=$(git config --get user.username 2>/dev/null || true)
+if [ -z "$username" ]; then
+  username=$(git config --get user.name 2>/dev/null || true)
+fi
+
+if [ -z "$username" ]; then
+  echo "Git username is not set. Run: git config user.username yourname"
+  exit 1
+fi
+
+if echo "$commit_msg" | grep -Eq "^${username} .+"; then
   exit 0
 fi
 
-echo "Commit message must follow Conventional Commits format:"
-echo "  feat: add something"
-echo "  fix(auth): resolve issue"
+echo "Commit message must start with your username, like:"
+echo "  ${username} added login page"
 exit 1
