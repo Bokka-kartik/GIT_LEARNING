@@ -4,7 +4,7 @@ export const resolvers = {
     user: () => ({
       id: 1,
       name: 'Asha',
-      email: 'asha@example.com'
-    })
-  }
-};
+      email: 'asha@example.com',
+    }),
+  },
+}
