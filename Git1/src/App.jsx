@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { add, subtract, divide, multiply, modulus } from './function'
 import { userSchema } from './graphql/schema'
 import { resolvers } from './graphql/reslover'
