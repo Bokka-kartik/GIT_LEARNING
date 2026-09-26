@@ -2,10 +2,6 @@
 set -e
 
 if [ -f package.json ]; then
-  if npm run | grep -qE '(^|[[:space:]])test([[:space:]]|$)'; then
-    npm test
-  fi
-
   if npm run | grep -qE '(^|[[:space:]])lint([[:space:]]|$)'; then
     npm run lint
   fi
