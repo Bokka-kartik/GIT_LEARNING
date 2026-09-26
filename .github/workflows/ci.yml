@@ -1,7 +1,9 @@
 name: CI
 
 on:
-  push:
+  # if you want to build and test the overall changes on push then this need to be uncommented
+  # but its a waste of check cuz only when a PR is raised then only a better suitable CI check is needed not wasting resources
+  # push:
   pull_request:
 
 permissions:
@@ -12,6 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+# my given name is validate we can have any name here let it be build,test,deploy check anything 
   validate:
     name: Test, lint, and build
     runs-on: ubuntu-latest
