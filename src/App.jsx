@@ -24,7 +24,7 @@ const App = () => {
   const applyOperation = (type) => {
     const value = Number(inputValue)
 
-    if (Number.isNaN(value)) {
+    if (inputValue.trim() === '' || Number.isNaN(value)) {
       return
     }
 
