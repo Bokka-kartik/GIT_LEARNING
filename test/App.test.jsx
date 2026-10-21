@@ -35,6 +35,17 @@ describe('App', () => {
     expect(screen.queryByText('+5 = 5')).not.toBeInTheDocument()
   })
 
+  it('ignores add and subtract when the calculator input is empty', () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Subtract' }))
+
+    expect(screen.getByText((_, element) => element?.textContent?.replace(/\s+/g, ' ').trim() === 'Current total: 0')).toBeInTheDocument()
+    expect(screen.queryByText('+0 = 0')).not.toBeInTheDocument()
+    expect(screen.queryByText('-0 = 0')).not.toBeInTheDocument()
+  })
+
   it('updates the math helper output from both inputs', () => {
     render(<App />)
 
