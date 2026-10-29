@@ -13,6 +13,10 @@ Small learning repo for Git/GitHub workflows and basic front-end development: a 
 - Husky `pre-commit` hook runs `npm run lint`. Fix lint errors instead of bypassing hooks.
 - PR descriptions: see `skills/pr-description/`.
 
+## Docs
+
+`README.md` is a short landing page. Detailed docs live in `docs/`, which mirrors the repo layout (`src/function/` -> `docs/src/function/README.md`). Do not duplicate docs content in the root README; link to it.
+
 ## Skills
 
 Reusable task instructions live in `skills/<skill-name>/SKILL.md`. When a task matches a skill's description, read that file and follow it.
@@ -25,5 +29,5 @@ Available skills:
 - `skills/branch-name/` - consistent branch names (`<type>/<kebab-description>`).
 - `skills/code-review/` - review a diff or files, one line per finding.
 - `skills/add-test/` - add Vitest or Playwright tests following repo patterns.
-- `skills/readme-update/` - sync README.md with the repo using minimal edits.
+- `skills/readme-update/` - sync README.md and docs/ with the repo using minimal edits.
 - `skills/new-skill/` - add a new skill and register it here.
