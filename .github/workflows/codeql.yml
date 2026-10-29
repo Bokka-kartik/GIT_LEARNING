@@ -1,0 +1,32 @@
+name: CodeQL
+
+# Free for public repos. Scans the JS code for security issues.
+on:
+  pull_request:
+  schedule:
+    # weekly scan of the default branch, catches newly discovered issues
+    - cron: "0 6 * * 1"
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (javascript)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+
+      - name: Run analysis
+        uses: github/codeql-action/analyze@v3
