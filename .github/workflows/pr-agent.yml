@@ -39,3 +39,7 @@ jobs:
           CONFIG.MODEL: gemini/gemini-3.8-flash
           # no fallback, so it never tries a paid OpenAI model it has no key for
           CONFIG.FALLBACK_MODELS: "[]"
+          # the free tier is slow: "medium" thinking plus the default 120s timeout made
+          # calls time out. Less thinking is faster; the longer timeout absorbs queueing.
+          CONFIG.REASONING_EFFORT: low
+          CONFIG.AI_TIMEOUT: "300"
