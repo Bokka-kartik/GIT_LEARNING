@@ -12,6 +12,7 @@ All run on pull requests.
 | `ci.yml` | `e2e` | Playwright tests in Chromium. Uploads `test-results/` if they fail. |
 | `codeql.yml` | `analyze` | CodeQL security scan. Also runs weekly. |
 | `secret-scan.yml` | `trufflehog` | Looks for leaked keys and tokens in the PR. |
+| `pr-agent.yml` | `pr_agent` | AI review comment on the PR (see below). |
 
 CI does not run on plain pushes, on purpose: a check only matters when a PR is raised.
 
@@ -29,6 +30,27 @@ CI does not run on plain pushes, on purpose: a check only matters when a PR is r
 3. If CI is red, do not merge. Either fix the code, or add an `ignore` entry for that package/version in `dependabot.yml`.
 
 `package-lock.json` is committed and CI uses `npm ci`, so everyone installs the exact same versions. Reverting a bad merge restores the old ones.
+
+## AI review (`workflows/pr-agent.yml`)
+
+[PR-Agent](https://github.com/The-PR-Agent/pr-agent) posts a summary and review on each PR, using Gemini's free API tier. It is advice only: it never blocks or merges anything.
+
+**One-time setup**
+
+1. Create a free key at <https://aistudio.google.com/apikey>.
+2. Add it under Settings > Secrets and variables > Actions > New repository secret, named `GEMINI_API_KEY`.
+
+**Using it**
+
+- It runs automatically when a PR is opened or updated.
+- Comment `/review`, `/improve` or `/describe` on a PR to run a tool again. Only the repo owner's comments trigger it.
+
+**Good to know**
+
+- It skips Dependabot and PRs from forks (neither gets access to the secret).
+- Free-tier limits apply. If you hit a rate limit, the run fails and you can re-run it later.
+- Do not paste secrets into PRs or comments; the diff is sent to Google's API.
+- The model name is set in the workflow (`CONFIG.MODEL`). If Gemini retires it, change it there.
 
 ## Templates and ownership
 
