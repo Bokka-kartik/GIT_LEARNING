@@ -1,0 +1,41 @@
+name: PR Agent
+
+# AI review on every PR, powered by Gemini's free API tier.
+# Needs the repo secret GEMINI_API_KEY (Settings > Secrets and variables > Actions).
+# Comment /review, /improve or /describe on a PR to run a tool again.
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+  issue_comment:
+    types: [created]
+
+jobs:
+  pr_agent:
+    name: Review with PR Agent
+    runs-on: ubuntu-latest
+    # - skip bots (Dependabot PRs have no access to Actions secrets anyway)
+    # - PRs from forks get no secrets, so only run for branches in this repo
+    # - only the repo owner can trigger it by comment, so strangers cannot burn the free quota
+    if: >-
+      github.event.sender.type != 'Bot' && (
+        (github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository) ||
+        (github.event_name == 'issue_comment' &&
+          github.event.issue.pull_request &&
+          github.event.comment.author_association == 'OWNER')
+      )
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      # pinned to a commit SHA (tag v0.49.0); Dependabot keeps it updated
+      - name: PR Agent
+        uses: The-PR-Agent/pr-agent@efdde4afe14aa401a3889012c7f3e9ef3081a430
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOOGLE_AI_STUDIO.GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CONFIG.MODEL: gemini/gemini-3.8-flash
+          # no fallback, so it never tries a paid OpenAI model it has no key for
+          CONFIG.FALLBACK_MODELS: "[]"
