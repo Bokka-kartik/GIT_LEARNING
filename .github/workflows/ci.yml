@@ -35,8 +35,42 @@ jobs:
       - name: Run tests
         run: npm test
 
+      # --max-warnings 0 so warnings fail the check instead of passing silently
       - name: Run lint
-        run: npm run lint
+        run: npm run lint -- --max-warnings 0
 
       - name: Build application
         run: npm run build
+
+  # separate job so it runs in parallel with the unit tests above
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm run test:e2e
+
+      # keep the report only when something failed, so you can see why
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: test-results/
+          retention-days: 7

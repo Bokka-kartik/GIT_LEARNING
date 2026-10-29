@@ -54,7 +54,7 @@ Risks, limitations, or where to look closely. Omit this section if there is noth
 
 ## Keep in sync
 
-`PR_TEMPLATE.md` at the repo root is the manual version of this same format. If the sections change here, update it too (and vice versa).
+`.github/pull_request_template.md` is the manual version of this same format. If the sections change here, update it too (and vice versa).
 
 ## Do not
 
