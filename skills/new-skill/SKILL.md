@@ -20,6 +20,7 @@ description: Add a new skill to this repo's skills/ folder in the standard forma
 3. Write plain step-by-step instructions. Suggested sections: process or format, rules, "Do not".
 4. Add one line to the "Available skills" list in `AGENTS.md`:
    `- \`skills/<skill-name>/\` - <short purpose>`
+5. Add discovery wrappers under `.agents/skills/<skill-name>/SKILL.md` and `.claude/skills/<skill-name>/SKILL.md`. Each wrapper repeats the name and description, then points agents to read and follow `skills/<skill-name>/SKILL.md` as the canonical instructions.
 
 ## Rules
 
@@ -28,7 +29,7 @@ description: Add a new skill to this repo's skills/ folder in the standard forma
 - One skill, one job. Split if it does two unrelated things.
 - Point to existing repo files as examples instead of pasting code that will go stale.
 - Keep it short. Every line costs tokens whenever the skill is read.
-- Content lives only in `skills/`. Never duplicate it elsewhere.
+- Full skill content lives only in `skills/`. Wrappers may contain metadata and a pointer, but must not duplicate the instructions.
 
 ## Do not
 

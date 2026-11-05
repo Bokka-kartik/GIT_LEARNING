@@ -1,13 +1,8 @@
-# Skills
+﻿# Skills
 
-Vendor-neutral, reusable task instructions for AI agents. One folder per skill:
+Vendor-neutral, reusable task instructions live in `skills/<skill-name>/SKILL.md`. This is the single source of truth.
 
-```
-skills/
-└── <skill-name>/
-    ├── SKILL.md      # required
-    └── ...           # optional scripts / reference files
-```
+Small discovery wrappers expose each skill to Codex and Gemini CLI through `.agents/skills/`, and Claude Code through `.claude/skills/`. Wrappers contain the skill name, description, and a pointer to the canonical file; do not copy full instructions into them.
 
 ## SKILL.md format
 
@@ -22,6 +17,6 @@ Plain step-by-step instructions.
 
 ## Rules
 
-- Keep skills vendor-neutral: no references to a specific tool's features (say "run this command", not "use the X tool").
-- Keep content here only. Vendor-specific files may point to this folder but must not duplicate it.
-- Add each new skill to the list in `AGENTS.md`.
+- Keep canonical skill instructions vendor-neutral.
+- Add each new skill to `AGENTS.md` and create matching discovery wrappers in `.agents/skills/` and `.claude/skills/`.
+- See `skills/new-skill/SKILL.md` for the creation steps.

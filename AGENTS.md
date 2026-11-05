@@ -19,7 +19,7 @@ Small learning repo for Git/GitHub workflows and basic front-end development: a 
 
 ## Skills
 
-Reusable task instructions live in `skills/<skill-name>/SKILL.md`. When a task matches a skill's description, read that file and follow it.
+Reusable task instructions live in `skills/<skill-name>/SKILL.md`. When a task matches a skill's description, read that file and follow it. Lightweight discovery wrappers expose each skill to Codex and Gemini CLI from `.agents/skills/`, and to Claude Code from `.claude/skills/`; keep the full instructions only in `skills/`.
 
 Available skills:
 
