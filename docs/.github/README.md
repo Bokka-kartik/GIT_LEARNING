@@ -11,6 +11,7 @@ All run on pull requests.
 | `ci.yml` | `validate` | `npm test`, lint with `--max-warnings 0` (warnings fail), `npm run build`. |
 | `ci.yml` | `e2e` | Playwright tests in Chromium. Uploads `test-results/` if they fail. |
 | `codeql.yml` | `analyze` | CodeQL security scan. Also runs weekly. |
+| `snyk.yml` | `security` | Scans npm dependencies for known vulnerabilities and uploads SARIF report. Also runs weekly. |
 | `secret-scan.yml` | `trufflehog` | Looks for leaked keys and tokens in the PR. |
 | `pr-agent.yml` | `pr_agent` | AI review comment on the PR (see below). |
 
@@ -51,6 +52,16 @@ CI does not run on plain pushes, on purpose: a check only matters when a PR is r
 - Free-tier limits apply. If you hit a rate limit, the run fails and you can re-run it later.
 - Do not paste secrets into PRs or comments; the diff is sent to Google's API.
 - The model name is set in the workflow (`CONFIG.MODEL`). If Gemini retires it, change it there.
+
+## Dependency vulnerability scan (`workflows/snyk.yml`)
+
+[Snyk](https://snyk.io) checks open-source npm dependencies for known vulnerabilities and security advisories. Results are published to the repository's GitHub Security / Code scanning tab via SARIF.
+
+**One-time setup**
+
+1. Create a free account at <https://app.snyk.io> (sign in with GitHub).
+2. Under Account Settings > General, copy your **Auth Token**.
+3. In your repo, add it under Settings > Secrets and variables > Actions > New repository secret, named `SNYK_TOKEN`.
 
 ## Templates and ownership
 
