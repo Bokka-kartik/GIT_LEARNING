@@ -1,7 +1,6 @@
-﻿---
+---
 name: new-skill
-description: Add a new skill to this repo's skills/ folder in the standard format and register it in AGENTS.md. Use when asked to create or add a skill.
+description: Add a skill to this repo in the standard format and expose it to Claude Code. Use when asked to create or add a skill.
 ---
 
-Read and follow [the canonical instructions](../../../skills/new-skill/SKILL.md) at the repository-root path `skills/new-skill/SKILL.md`. Do not duplicate the instructions here.
-
+Read and follow the canonical skill at [`.agents/skills/new-skill/SKILL.md`](../../../.agents/skills/new-skill/SKILL.md).

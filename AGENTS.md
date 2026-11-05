@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Vendor-neutral instructions for any AI coding agent working in this repo.
-This file and `skills/` are the single source of truth. Tool-specific files, if ever added, must only point here.
+This file is the source of repository-wide guidance. Tool-specific guidance files only point here.
 
 ## Project
 
@@ -11,7 +11,7 @@ Small learning repo for Git/GitHub workflows and basic front-end development: a 
 
 - Husky `commit-msg` hook: the commit message must **start with the committer's git username**, followed by a space and a description, e.g. `yourname added login page`. The username comes from `git config user.username`, falling back to `user.name`.
 - Husky `pre-commit` hook runs `npm run lint`. Fix lint errors instead of bypassing hooks.
-- PR descriptions: see `skills/pr-description/`.
+- PR descriptions: see `.agents/skills/pr-description/SKILL.md`.
 
 ## Docs
 
@@ -19,18 +19,7 @@ Small learning repo for Git/GitHub workflows and basic front-end development: a 
 
 ## Skills
 
-Reusable task instructions live in `skills/<skill-name>/SKILL.md`. When a task matches a skill's description, read that file and follow it. Lightweight discovery wrappers expose each skill to Codex and Gemini CLI from `.agents/skills/`, and to Claude Code from `.claude/skills/`; keep the full instructions only in `skills/`.
-
-Available skills:
-
-- `skills/caveman-talk/` - ultra-compact reply style. Opt-in only, when the user asks for brief replies.
-- `skills/commit-message/` - write a commit message that satisfies the Husky username rule.
-- `skills/pr-description/` - structured PR.md for the whole branch.
-- `skills/branch-name/` - consistent branch names (`<type>/<kebab-description>`).
-- `skills/code-review/` - review a diff or files, one line per finding.
-- `skills/add-test/` - add Vitest or Playwright tests following repo patterns.
-- `skills/readme-update/` - sync README.md and docs/ with the repo using minimal edits.
-- `skills/new-skill/` - add a new skill and register it here.
+Skills live in `.agents/skills/<skill-name>/SKILL.md`, which is the canonical source and is discovered by Codex and Gemini CLI. Claude Code discovers skills in `.claude/skills/`; those entries contain only the required name and description plus a pointer to the canonical skill. Keep skill instructions in `.agents/skills/` and do not maintain a duplicate inventory here.
 
 ## graphify
 

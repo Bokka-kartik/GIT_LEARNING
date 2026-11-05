@@ -24,7 +24,7 @@ Checks you can run locally:
 - Tests: Vitest in `test/`, Playwright in `playwright-tests/`.
 - GitHub Actions for CI, CodeQL and secret scanning, plus Dependabot, in `.github/`.
 - Husky Git hooks in `.husky/`.
-- Reusable AI-agent instructions in `AGENTS.md` and `skills/`.
+- Reusable AI-agent instructions in `AGENTS.md` and `.agents/skills/`.
 
 ## Documentation
 
@@ -40,4 +40,4 @@ Detailed docs are in [docs/](docs/README.md), organised to mirror the repo folde
 
 ## Contributing
 
-Branch from `dev`, name it `<type>/<short-description>` (see `skills/branch-name/`), and open a PR. Commit messages must start with your git username, see [Git hooks](docs/.husky/README.md).
+Branch from `dev`, name it `<type>/<short-description>` (see `.agents/skills/branch-name/`), and open a PR. Commit messages must start with your git username, see [Git hooks](docs/.husky/README.md).

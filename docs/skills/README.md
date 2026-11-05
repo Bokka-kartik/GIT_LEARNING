@@ -1,8 +1,8 @@
-﻿# Skills
+# Skills
 
-Vendor-neutral, reusable task instructions live in `skills/<skill-name>/SKILL.md`. This is the single source of truth.
+Vendor-neutral, reusable task instructions live in `.agents/skills/<skill-name>/SKILL.md`. This is the single source of truth and is discovered by Codex and Gemini CLI.
 
-Small discovery wrappers expose each skill to Codex and Gemini CLI through `.agents/skills/`, and Claude Code through `.claude/skills/`. Wrappers contain the skill name, description, and a pointer to the canonical file; do not copy full instructions into them.
+Claude Code discovers skills through `.claude/skills/`, so each entry there contains its name, description, and a pointer to the canonical file. Keep full instructions only in `.agents/skills/`.
 
 ## SKILL.md format
 
@@ -18,5 +18,5 @@ Plain step-by-step instructions.
 ## Rules
 
 - Keep canonical skill instructions vendor-neutral.
-- Add each new skill to `AGENTS.md` and create matching discovery wrappers in `.agents/skills/` and `.claude/skills/`.
-- See `skills/new-skill/SKILL.md` for the creation steps.
+- Add each new skill under `.agents/skills/` and create a small Claude discovery entry in `.claude/skills/`.
+- See `.agents/skills/new-skill/SKILL.md` for the creation steps.
