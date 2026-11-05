@@ -8,7 +8,7 @@ description: Keep README.md (landing page) and the docs/ folder in sync with the
 ## Process
 
 1. Compare `README.md` and `docs/` against the actual repo: top-level folders, `package.json` scripts, `.github/workflows/`, `.husky/`.
-2. Find what is missing or stale: new folders (e.g. `playwright-tests/`, `skills/`), new scripts, removed things still mentioned.
+2. Find what is missing or stale: new folders (e.g. `playwright-tests/`, `.agents/skills/`), new scripts, removed things still mentioned.
 3. Edit only those lines. Keep the existing sections, order and tone. Detail goes in `docs/<same path as the folder>/README.md`; the root README only links to it.
 4. Show the user the change as a short list of what was added, changed or removed.
 

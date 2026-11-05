@@ -14,7 +14,7 @@ Detailed documentation for this repo. The root [README](../README.md) is the sho
 | `playwright-tests/` | [playwright-tests/README.md](playwright-tests/README.md) |
 | `.github/` | [.github/README.md](.github/README.md) |
 | `.husky/` | [.husky/README.md](.husky/README.md) |
-| `skills/` | [skills/README.md](skills/README.md) |
+| `.agents/skills/` | [skills/README.md](skills/README.md) |
 
 ## Files that stay where they are
 
@@ -22,7 +22,8 @@ Some Markdown files must live in their original place because a tool reads them 
 
 - `README.md` - the GitHub landing page.
 - `AGENTS.md` - instructions for AI agents.
-- `skills/*/SKILL.md` - the skills themselves.
+- `.agents/skills/*/SKILL.md` - the canonical skills.
+- `.claude/skills/*/SKILL.md` - Claude discovery entries pointing to canonical skills.
 - `.github/pull_request_template.md` and `.github/ISSUE_TEMPLATE/` - GitHub only loads templates from `.github/`.
 
 ## Adding a doc
