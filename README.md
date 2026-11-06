@@ -22,7 +22,7 @@ Checks you can run locally:
 
 - A Vite + React app (`src/`) with math helpers and a GraphQL-style demo.
 - Tests: Vitest in `test/`, Playwright in `playwright-tests/`.
-- GitHub Actions for CI, CodeQL, secret scanning and Snyk vulnerability scanning, plus Dependabot, in `.github/`.
+- GitHub Actions for CI, CodeQL, secret scanning, Snyk dependency scanning, and SonarQube source analysis, plus Dependabot, in `.github/`.
 - Husky Git hooks in `.husky/`.
 - Reusable AI-agent instructions in `AGENTS.md` and `.agents/skills/`.
 

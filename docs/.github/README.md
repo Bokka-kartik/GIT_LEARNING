@@ -4,7 +4,7 @@ Folder: `.github/`
 
 ## Workflows (`.github/workflows/`)
 
-All run on pull requests.
+Most run on pull requests; SonarQube also analyzes pushes to `dev`.
 
 | File | Job | What it checks |
 | --- | --- | --- |
@@ -12,10 +12,11 @@ All run on pull requests.
 | `ci.yml` | `e2e` | Playwright tests in Chromium. Uploads `test-results/` if they fail. |
 | `codeql.yml` | `analyze` | CodeQL security scan. Also runs weekly. |
 | `snyk.yml` | `security` | Scans npm dependencies for known vulnerabilities and uploads SARIF report. Also runs weekly. |
+| `sonarqube.yml` | `analyze` | SonarQube Cloud source-code analysis on pull requests and pushes to `dev`. |
 | `secret-scan.yml` | `trufflehog` | Looks for leaked keys and tokens in the PR. |
 | `pr-agent.yml` | `pr_agent` | AI review comment on the PR (see below). |
 
-CI does not run on plain pushes, on purpose: a check only matters when a PR is raised.
+Most checks run on pull requests. SonarQube also analyzes pushes to `dev` to keep the default-branch analysis current.
 
 ## Dependabot (`dependabot.yml`)
 
@@ -63,6 +64,20 @@ CI does not run on plain pushes, on purpose: a check only matters when a PR is r
 2. Under Account Settings > General, copy your **Auth Token**.
 3. In your repo, add it under Settings > Secrets and variables > Actions > New repository secret, named `SNYK_TOKEN`.
 
+## Source-code analysis (`workflows/sonarqube.yml`)
+
+[SonarQube Cloud](https://sonarcloud.io) analyzes source code for bugs, vulnerabilities, and maintainability issues. Unlike Snyk, it does not scan npm dependencies for known vulnerabilities; both checks are complementary.
+
+**One-time setup**
+
+1. Create/import this repository as a project in SonarQube Cloud.
+2. Add the project token under Settings > Secrets and variables > Actions > New repository secret, named `SONAR_TOKEN`.
+3. Add these repository variables under Settings > Secrets and variables > Actions > Variables:
+   - `SONAR_PROJECT_KEY`: the project key shown in SonarQube Cloud.
+   - `SONAR_ORGANIZATION`: the organization key shown in SonarQube Cloud.
+
+The workflow analyzes pull requests targeting `dev` and pushes to `dev`. Pull requests from forks are skipped because they do not receive repository secrets.
+
 ## Templates and ownership
 
 | File | Purpose |
@@ -75,6 +90,6 @@ CI does not run on plain pushes, on purpose: a check only matters when a PR is r
 
 Set these on GitHub under Settings:
 
-- Branch protection on `dev`: require the CI, CodeQL and TruffleHog checks to pass before merging.
+- Branch protection on `dev`: require the CI, CodeQL, SonarQube Cloud analysis, and TruffleHog checks to pass before merging.
 - Secret scanning and push protection: on.
 - Dependabot alerts: on.
