@@ -1,0 +1,199 @@
+name: GitHub Telegram Notifications
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    types: [opened, closed]
+
+  issues:
+    types: [opened]
+
+  push:
+
+  # Failed workflow notifications are added later
+  # once you identify the workflow to monitor.
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    # PRs: only those targeting the default branch.
+    # Pushes: skip the default branch (merged PRs are already announced).
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.base.ref == github.event.repository.default_branch)
+      && (github.event_name != 'push' || github.ref_name != github.event.repository.default_branch)
+
+    steps:
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+          EVENT_NAME: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+          REPOSITORY: ${{ github.repository }}
+
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_MERGED: ${{ github.event.pull_request.merged }}
+
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+
+          ACTOR: ${{ github.actor }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+
+          BRANCH: ${{ github.ref_name }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_URL: ${{ github.event.head_commit.url }}
+
+        run: |
+          set -euo pipefail
+
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "Telegram credentials are missing."
+            exit 1
+          fi
+
+          # Telegram HTML mode: escape &, < and > in free-text fields
+          esc() {
+            printf '%s' "$1" | sed -e 's/&/\\&amp;/g' -e 's/</\\&lt;/g' -e 's/>/\\&gt;/g'
+          }
+
+          # Only the first line of a commit message
+          COMMIT_MESSAGE=$(printf '%s' "$COMMIT_MESSAGE" | head -n 1)
+          TIME=$(TZ=Asia/Kolkata date +"%-I:%M %p IST")
+
+          REPOSITORY=$(esc "$REPOSITORY")
+          PR_TITLE=$(esc "$PR_TITLE")
+          PR_URL=$(esc "$PR_URL")
+          ISSUE_TITLE=$(esc "$ISSUE_TITLE")
+          ISSUE_URL=$(esc "$ISSUE_URL")
+          BRANCH=$(esc "$BRANCH")
+          COMMIT_MESSAGE=$(esc "$COMMIT_MESSAGE")
+          COMMIT_URL=$(esc "$COMMIT_URL")
+          ACTOR=$(esc "$ACTOR")
+          PR_AUTHOR=$(esc "$PR_AUTHOR")
+          ISSUE_AUTHOR=$(esc "$ISSUE_AUTHOR")
+
+          case "$EVENT_NAME" in
+
+            workflow_dispatch)
+              MESSAGE="🧪 <b>GitHub Telegram bot test successful!</b>
+
+          <b>Repository:</b> $REPOSITORY"
+
+              ;;
+
+            pull_request)
+
+              if [ "$ACTION" = "opened" ]; then
+
+                MESSAGE="🔔 <b>New Pull Request</b>
+
+          <b>Repository:</b> $REPOSITORY
+
+          <b>Developer:</b> $PR_AUTHOR
+
+          <b>PR:</b> #$PR_NUMBER — $PR_TITLE
+
+          <b>Status:</b> Awaiting review
+
+          <b>Time:</b> $TIME
+
+          <a href="$PR_URL">View pull request →</a>"
+
+              elif [ "$ACTION" = "closed" ] && [ "$PR_MERGED" = "true" ]; then
+
+                MESSAGE="🎉 <b>Pull Request Merged!</b>
+
+          <b>Repository:</b> $REPOSITORY
+
+          <b>Developer:</b> $PR_AUTHOR
+
+          <b>PR:</b> #$PR_NUMBER — $PR_TITLE
+
+          <b>Status:</b> Merged
+
+          <b>Time:</b> $TIME
+
+          <a href="$PR_URL">View pull request →</a>"
+
+              elif [ "$ACTION" = "closed" ]; then
+
+                MESSAGE="🚫 <b>Pull Request Closed</b>
+
+          <b>Repository:</b> $REPOSITORY
+
+          <b>Developer:</b> $PR_AUTHOR
+
+          <b>PR:</b> #$PR_NUMBER — $PR_TITLE
+
+          <b>Status:</b> Closed without merging
+
+          <b>Time:</b> $TIME
+
+          <a href="$PR_URL">View pull request →</a>"
+
+              else
+                exit 0
+              fi
+
+              ;;
+
+            issues)
+
+              MESSAGE="🐛 <b>New Issue</b>
+
+          <b>Repository:</b> $REPOSITORY
+
+          <b>Developer:</b> $ISSUE_AUTHOR
+
+          <b>Issue:</b> #$ISSUE_NUMBER — $ISSUE_TITLE
+
+          <b>Time:</b> $TIME
+
+          <a href="$ISSUE_URL">View issue →</a>"
+
+              ;;
+
+            push)
+
+              MESSAGE="🚀 <b>New Commit Pushed</b>
+
+          <b>Repository:</b> $REPOSITORY
+
+          <b>Developer:</b> $ACTOR
+
+          <b>Branch:</b> $BRANCH
+
+          <b>Commit:</b> $COMMIT_MESSAGE
+
+          <b>Time:</b> $TIME
+
+          <a href="$COMMIT_URL">View commit →</a>"
+
+              ;;
+
+            *)
+
+              echo "Event not configured: $EVENT_NAME"
+              exit 0
+
+              ;;
+
+          esac
+
+          curl --fail --silent --show-error \\
+            --request POST \\
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \\
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \\
+            --data-urlencode "parse_mode=HTML" \\
+            --data-urlencode "text=${MESSAGE}"
