@@ -20,3 +20,11 @@ Plain step-by-step instructions.
 - Keep canonical skill instructions vendor-neutral.
 - Add each new skill under `.agents/skills/` and create a small Claude discovery entry in `.claude/skills/`.
 - See `.agents/skills/new-skill/SKILL.md` for the creation steps.
+
+## Ponytail skills
+
+This repo includes the six Ponytail skills: `ponytail`, `ponytail-review`,
+`ponytail-audit`, `ponytail-debt`, `ponytail-gain`, and `ponytail-help`.
+Their canonical instructions live in `.agents/skills/`, with Claude discovery
+entries in `.claude/skills/`. Source and license details are in
+[PONYTAIL-LICENSE.md](PONYTAIL-LICENSE.md).
