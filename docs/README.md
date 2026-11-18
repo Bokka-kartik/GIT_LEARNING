@@ -16,6 +16,10 @@ Detailed documentation for this repo. The root [README](../README.md) is the sho
 | `.husky/` | [.husky/README.md](.husky/README.md) |
 | `.agents/skills/` | [skills/README.md](skills/README.md) |
 
+## Cross-cutting learning notes
+
+The [learning tracker](learning/README.md) covers tools and ideas that span multiple folders rather than documenting one part of the application.
+
 ## Files that stay where they are
 
 Some Markdown files must live in their original place because a tool reads them from there:

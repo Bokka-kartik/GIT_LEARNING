@@ -15,6 +15,10 @@ description: <one line: what it does and when to use it>
 Plain step-by-step instructions.
 ```
 
+## Learning notes
+
+When creating or revising notes in [docs/learning/](../learning/README.md), follow the [learning-notes skill](../../.agents/skills/learning-notes/SKILL.md). It uses a few real questions as anchors, with concise explanations grounded in evidence—not a question for every heading.
+
 ## Rules
 
 - Keep canonical skill instructions vendor-neutral.

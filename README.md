@@ -28,7 +28,7 @@ Checks you can run locally:
 
 ## Documentation
 
-Detailed docs are in [docs/](docs/README.md), organised to mirror the repo folders:
+Detailed docs are in [docs/](docs/README.md), organised by repo area with a separate section for cross-cutting learning notes:
 
 - [Function helpers](docs/src/function/README.md)
 - [GraphQL demo](docs/src/graphql/README.md)
@@ -37,6 +37,7 @@ Detailed docs are in [docs/](docs/README.md), organised to mirror the repo folde
 - [GitHub setup: CI, Dependabot, templates](docs/.github/README.md)
 - [Git hooks](docs/.husky/README.md)
 - [Skills](docs/skills/README.md)
+- [Learning tracker](docs/learning/README.md)
 
 ## Contributing
 
