@@ -16,9 +16,9 @@ Free models can be enough for experiments and tasks that fit a provider's free t
 
 The local FreeLLMAPI project describes an OpenAI-compatible API that routes among providers. Before relying on it, check current provider limits, data terms, and fallback behavior; these can change.
 
-### A verified Claude CLI route
+### A working Claude CLI route
 
-On 21 November 2026, Claude CLI in Termux Ubuntu sent requests through a local FreeLLM endpoint. `ANTHROPIC_BASE_URL` pointed to `localhost:3001`, and the FreeLLM dashboard recorded input-token usage. This confirms that an Anthropic-compatible client can reach a different provider through an API-compatible gateway.
+Claude CLI in Termux Ubuntu can send requests through a local FreeLLM endpoint. An `ANTHROPIC_BASE_URL` value pointing to `localhost:3001`, together with input usage recorded by the FreeLLM dashboard, confirms that an Anthropic-compatible client can reach a different provider through an API-compatible gateway.
 
 The routing check also demonstrates that a locally running server is not assumed until a listener and HTTP endpoint are verified. Useful checks include `ss -ltnp | grep 3001`, `echo "$ANTHROPIC_BASE_URL"`, and `curl http://localhost:3001/`.
 

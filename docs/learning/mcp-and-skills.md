@@ -18,7 +18,7 @@ MCP is a connection and permission layer for tools or context. A skill is instru
 
 A local model can discuss external actions, but that does not prove it can perform them. Browser automation or a Playwright package also does not prove that MCP is configured. Require a real MCP server, one exposed tool, client connection, and confirmed permission behavior before describing the integration as complete.
 
-On 19 November 2026, this distinction was explored with an email-action question. MCP was considered as the possible tool boundary, but no MCP server or email integration was completed.
+An email-action question illustrates the distinction: MCP could provide the external tool boundary, but generating instructions for sending email is not the same as completing the MCP integration or performing the action.
 
 ### A small trial
 
