@@ -12,6 +12,14 @@ A skill is reusable instructions for a task or working style—not a model or ne
 
 **Ponytail** favors the smallest complete change. **Caveman** makes replies terse without dropping technical facts. They change how an agent approaches or explains work; they do not make a weak model stronger.
 
+## What is the difference between MCP and an agent skill?
+
+MCP is a connection and permission layer for tools or context. A skill is instruction for how an agent should approach a task. The two can be used together: MCP may expose an email or calendar action, while a skill defines when and how an agent should use it.
+
+A local model can discuss external actions, but that does not prove it can perform them. Browser automation or a Playwright package also does not prove that MCP is configured. Require a real MCP server, one exposed tool, client connection, and confirmed permission behavior before describing the integration as complete.
+
+An email-action question illustrates the distinction: MCP could provide the external tool boundary, but generating instructions for sending email is not the same as completing the MCP integration or performing the action.
+
 ### A small trial
 
 Try one small task. Check an MCP server's permissions and data access; compare a skill's result with and without it. Keep secrets out of the experiment.

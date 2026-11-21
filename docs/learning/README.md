@@ -8,8 +8,8 @@ When writing or revising a note, follow the [learning-notes skill](../../.agents
 
 | Topic | What to revisit | Status |
 | --- | --- | --- |
-| [AI agents and model access](ai-agents-and-model-access.md) | OpenClaw, Hermes, gateways, FreeLLMAPI, and TokenEconomizer | To explore |
-| [MCP and agent skills](mcp-and-skills.md) | MCP, browser-tool experiments, Ponytail, and Caveman | To explore |
+| [AI agents and model access](ai-agents-and-model-access.md) | OpenClaw, Hermes, gateways, FreeLLMAPI, and TokenEconomizer | Tried |
+| [MCP and agent skills](mcp-and-skills.md) | MCP, browser-tool experiments, Ponytail, and Caveman | In progress |
 | [Local development and cloud emulation](local-development-and-cloud-emulation.md) | Docker, WSL, VirtualBox, Kubernetes tooling, and Floci | To explore |
 | Git and GitHub | Existing repository workflows, CI, and hooks | Documented |
 

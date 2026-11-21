@@ -16,6 +16,28 @@ Free models can be enough for experiments and tasks that fit a provider's free t
 
 The local FreeLLMAPI project describes an OpenAI-compatible API that routes among providers. Before relying on it, check current provider limits, data terms, and fallback behavior; these can change.
 
+### A working Claude CLI route
+
+Claude CLI in Termux Ubuntu can send requests through a local FreeLLM endpoint. An `ANTHROPIC_BASE_URL` value pointing to `localhost:3001`, together with input usage recorded by the FreeLLM dashboard, confirms that an Anthropic-compatible client can reach a different provider through an API-compatible gateway.
+
+The routing check also demonstrates that a locally running server is not assumed until a listener and HTTP endpoint are verified. Useful checks include `ss -ltnp | grep 3001`, `echo "$ANTHROPIC_BASE_URL"`, and `curl http://localhost:3001/`.
+
+## What did local inference teach?
+
+A quantized 1.7B model using Q4_K_M worked as a local phone experiment. A 7B model loaded, but was difficult and slow to use. Successful loading is not the same as practical inference: RAM use, inference speed, thermal load, and comfort still matter.
+
+## What should come next?
+
+Learn the agent loop before adopting more agent frameworks:
+
+1. Trace `User -> Model -> Tool decision -> Execution -> Result -> Model`.
+2. Build one small Node.js tool.
+3. Handle tool calls and inspect the tool result.
+4. Test invalid input and execution failures.
+5. Add iteration limits and clear success or stopping conditions.
+
+The goal is to understand tool execution and error handling before comparing complete frameworks such as OpenClaw or Hermes.
+
 ## Cost control with TokenEconomizer
 
 The local project tries to reduce repeated agent-session waste in three ways:
