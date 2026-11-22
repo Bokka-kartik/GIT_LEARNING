@@ -1,3 +1,4 @@
+
 name: GitHub Telegram Notifications
 
 on:
@@ -11,9 +12,6 @@ on:
 
   push:
 
-  # Failed workflow notifications are added later
-  # once you identify the workflow to monitor.
-
 permissions:
   contents: read
   pull-requests: read
@@ -21,6 +19,7 @@ permissions:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     # PRs: only those targeting the default branch.
     # Pushes: skip the default branch (merged PRs are already announced).
     if: >-
@@ -57,20 +56,34 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "Telegram credentials are missing."
+          # Validate Telegram credentials
+          if [[ -z "$TELEGRAM_BOT_TOKEN" || -z "$TELEGRAM_CHAT_ID" ]]; then
+            echo "ERROR: Telegram credentials are missing."
             exit 1
           fi
 
-          # Telegram HTML mode: escape &, < and > in free-text fields
+          if [[ "$TELEGRAM_BOT_TOKEN" == *$'\n'* || "$TELEGRAM_BOT_TOKEN" == *" "* ]]; then
+            echo "ERROR: Bot token contains whitespace or newline characters."
+            exit 1
+          fi
+
+          echo "Telegram credentials are present."
+          echo "Token length: ${#TELEGRAM_BOT_TOKEN}"
+
+          # Escape HTML special characters
           esc() {
-            printf '%s' "$1" | sed -e 's/&/\\&amp;/g' -e 's/</\\&lt;/g' -e 's/>/\\&gt;/g'
+            printf '%s' "$1" |
+              sed -e 's/&/\&amp;/g' \
+                  -e 's/</\&lt;/g' \
+                  -e 's/>/\&gt;/g'
           }
 
-          # Only the first line of a commit message
+          # Only use the first line of a commit message
           COMMIT_MESSAGE=$(printf '%s' "$COMMIT_MESSAGE" | head -n 1)
+
           TIME=$(TZ=Asia/Kolkata date +"%-I:%M %p IST")
 
+          # Escape user-provided text
           REPOSITORY=$(esc "$REPOSITORY")
           PR_TITLE=$(esc "$PR_TITLE")
           PR_URL=$(esc "$PR_URL")
@@ -86,6 +99,7 @@ jobs:
           case "$EVENT_NAME" in
 
             workflow_dispatch)
+
               MESSAGE="🧪 <b>GitHub Telegram bot test successful!</b>
 
           <b>Repository:</b> $REPOSITORY"
@@ -94,7 +108,7 @@ jobs:
 
             pull_request)
 
-              if [ "$ACTION" = "opened" ]; then
+              if [[ "$ACTION" == "opened" ]]; then
 
                 MESSAGE="🔔 <b>New Pull Request</b>
 
@@ -110,7 +124,7 @@ jobs:
 
           <a href="$PR_URL">View pull request →</a>"
 
-              elif [ "$ACTION" = "closed" ] && [ "$PR_MERGED" = "true" ]; then
+              elif [[ "$ACTION" == "closed" && "$PR_MERGED" == "true" ]]; then
 
                 MESSAGE="🎉 <b>Pull Request Merged!</b>
 
@@ -126,7 +140,7 @@ jobs:
 
           <a href="$PR_URL">View pull request →</a>"
 
-              elif [ "$ACTION" = "closed" ]; then
+              elif [[ "$ACTION" == "closed" ]]; then
 
                 MESSAGE="🚫 <b>Pull Request Closed</b>
 
@@ -191,9 +205,17 @@ jobs:
 
           esac
 
+          # Send Telegram notification
+          API_URL="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage"
+
+          echo "Sending Telegram notification..."
+
           curl --fail --silent --show-error \
             --request POST \
-            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            "$API_URL" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "parse_mode=HTML" \
             --data-urlencode "text=${MESSAGE}"
+
+          echo ""
+          echo "Telegram notification sent successfully."
