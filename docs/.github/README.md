@@ -15,9 +15,13 @@ Most run on pull requests; SonarQube also analyzes pushes to `dev`.
 | `sonarqube.yml` | `analyze` | SonarQube Cloud source-code analysis on pull requests and pushes to `dev`. |
 | `secret-scan.yml` | `trufflehog` | Looks for leaked keys and tokens in the PR. |
 | `pr-agent.yml` | `pr_agent` | AI review comment on the PR (see below). |
-| `telegram-notify.yml` | `notify` | Sends Telegram notifications on pushes to non-default branches. |
+| `telegram-notify.yml` | `notify` | Sends Telegram messages for repository events. See the [Telegram notifications guide](telegram-notifications.md) for setup and reuse. |
 
 Most checks run on pull requests. SonarQube also analyzes pushes to `dev` to keep the default-branch analysis current.
+
+### Telegram notifications (`workflows/telegram-notify.yml`)
+
+Sends issue, pull request, and push notifications to Telegram. See the [setup and replication guide](telegram-notifications.md).
 
 ## Dependabot (`dependabot.yml`)
 
@@ -69,15 +73,7 @@ Most checks run on pull requests. SonarQube also analyzes pushes to `dev` to kee
 
 [SonarQube Cloud](https://sonarcloud.io) analyzes source code for bugs, vulnerabilities, and maintainability issues. Unlike Snyk, it does not scan npm dependencies for known vulnerabilities; both checks are complementary.
 
-**One-time setup**
-
-1. Create/import this repository as a project in SonarQube Cloud.
-2. Add the project token under Settings > Secrets and variables > Actions > New repository secret, named `SONAR_TOKEN`.
-3. Add these repository variables under Settings > Secrets and variables > Actions > Variables:
-   - `SONAR_PROJECT_KEY`: the project key shown in SonarQube Cloud.
-   - `SONAR_ORGANIZATION`: the organization key shown in SonarQube Cloud.
-
-The workflow analyzes pull requests targeting `dev` and pushes to `dev`. Pull requests from forks are skipped because they do not receive repository secrets.
+See the [SonarQube Cloud setup guide](sonarqube-cloud.md) for project configuration, required secrets and variables, and branch behavior.
 
 ## Templates and ownership
 
