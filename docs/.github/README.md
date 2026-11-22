@@ -15,6 +15,7 @@ Most run on pull requests; SonarQube also analyzes pushes to `dev`.
 | `sonarqube.yml` | `analyze` | SonarQube Cloud source-code analysis on pull requests and pushes to `dev`. |
 | `secret-scan.yml` | `trufflehog` | Looks for leaked keys and tokens in the PR. |
 | `pr-agent.yml` | `pr_agent` | AI review comment on the PR (see below). |
+| `telegram-notify.yml` | `notify` | Sends Telegram notifications on pushes to non-default branches. |
 
 Most checks run on pull requests. SonarQube also analyzes pushes to `dev` to keep the default-branch analysis current.
 
