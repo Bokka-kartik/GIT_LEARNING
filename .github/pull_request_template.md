@@ -29,10 +29,10 @@ Cover the WHOLE branch, not just the last commit. Delete these comments when don
 ## Testing
 
 <!-- What you ran and the result. Write "Not run" for anything you skipped. -->
-- [ ] `npm test`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] `npm run test:e2e`
+- [ ] `pnpm test`
+- [ ] `pnpm run lint`
+- [ ] `pnpm run build`
+- [ ] `pnpm run test:e2e`
 - Result:
 
 ## Reviewer notes

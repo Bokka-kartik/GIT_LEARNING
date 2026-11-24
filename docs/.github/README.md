@@ -8,7 +8,7 @@ Most run on pull requests; SonarQube also analyzes pushes to `dev`.
 
 | File | Job | What it checks |
 | --- | --- | --- |
-| `ci.yml` | `validate` | `npm test`, lint with `--max-warnings 0` (warnings fail), `npm run build`. |
+| `ci.yml` | `validate` | `pnpm test`, lint with `--max-warnings 0` (warnings fail), `pnpm run build`. |
 | `ci.yml` | `e2e` | Playwright tests in Chromium. Uploads `test-results/` if they fail. |
 | `codeql.yml` | `analyze` | CodeQL security scan. Also runs weekly. |
 | `snyk.yml` | `security` | Scans npm dependencies for known vulnerabilities and uploads SARIF report. Also runs weekly. |
@@ -36,7 +36,7 @@ Sends issue, pull request, and push notifications to Telegram. See the [setup an
 2. If CI is green, skim the changelog and merge.
 3. If CI is red, do not merge. Either fix the code, or add an `ignore` entry for that package/version in `dependabot.yml`.
 
-`package-lock.json` is committed and CI uses `npm ci`, so everyone installs the exact same versions. Reverting a bad merge restores the old ones.
+`pnpm-lock.yaml` is committed and CI uses `pnpm install --frozen-lockfile`, so everyone installs the exact same versions. Reverting a bad merge restores the old ones.
 
 ## AI review (`workflows/pr-agent.yml`)
 
