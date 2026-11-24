@@ -10,7 +10,7 @@ Small learning repo for Git/GitHub workflows and basic front-end development: a 
 ## Git conventions
 
 - Husky `commit-msg` hook: the commit message must **start with the committer's git username**, followed by a space and a description, e.g. `yourname added login page`. The username comes from `git config user.username`, falling back to `user.name`.
-- Husky `pre-commit` hook runs `npm run lint`. Fix lint errors instead of bypassing hooks.
+- Husky `pre-commit` hook runs `pnpm run lint`. Fix lint errors instead of bypassing hooks.
 - PR descriptions: see `.agents/skills/pr-description/SKILL.md`.
 
 ## Docs

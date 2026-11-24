@@ -2,15 +2,15 @@
 
 Folder: `playwright-tests/`
 
-Playwright drives a real Chromium browser against the running app. Config: `playwright.config.js` (it starts `npm run dev` on `127.0.0.1:5173` automatically).
+Playwright drives a real Chromium browser against the running app. Config: `playwright.config.js` (it starts `pnpm run dev` on `127.0.0.1:5173` automatically).
 
 | Command | What it does |
 | --- | --- |
-| `npm run test:e2e` | Run all E2E tests headless. |
-| `npm run test:e2e:headed` | Run with the browser visible. |
-| `npm run test:e2e:ui` | Open Playwright's interactive UI. |
+| `pnpm run test:e2e` | Run all E2E tests headless. |
+| `pnpm run test:e2e:headed` | Run with the browser visible. |
+| `pnpm run test:e2e:ui` | Open Playwright's interactive UI. |
 
-First time on a machine: `npx playwright install chromium`.
+First time on a machine: `pnpm exec playwright install chromium`.
 
 | File | Covers |
 | --- | --- |

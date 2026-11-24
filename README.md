@@ -5,18 +5,18 @@ A small learning repo for Git, GitHub and basic front-end workflows: a Vite + Re
 ## Quick start
 
 ```
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 Checks you can run locally:
 
 | Command | Runs |
 | --- | --- |
-| `npm test` | Unit and component tests (Vitest) |
-| `npm run test:e2e` | Browser tests (Playwright) |
-| `npm run lint` | ESLint |
-| `npm run build` | Production build |
+| `pnpm test` | Unit and component tests (Vitest) |
+| `pnpm run test:e2e` | Browser tests (Playwright) |
+| `pnpm run lint` | ESLint |
+| `pnpm run build` | Production build |
 
 ## What is in here
 
